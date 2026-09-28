@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html lang="th" translate="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="google" content="notranslate">
+<title>English for Daily Life | By T.OAT</title>
+<style>
+:root{
+  --ink:#1F2340; --ink2:#50557A; --paper:#EEF1F6; --card:#FFFFFF; --line:#D9DEEA;
+  --ok:#1E9E6A; --okbg:#E3F6EC; --bad:#D6423A; --badbg:#FDE8E6; --warn:#E3A21A;
+  --sky:#5BB8F0; --sky2:#DCEFFC; --skyink:#0E3A57;
+  --f: "Avenir Next","Segoe UI","Sukhumvit Set","Noto Sans Thai","Leelawadee UI",Tahoma,system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%}
+body{font-family:var(--f);color:var(--ink);background:var(--paper);font-size:17px;line-height:1.55;
+  padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);-webkit-text-size-adjust:100%}
+button{font:inherit;color:inherit;cursor:pointer}
+button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid #3C6FE0;outline-offset:2px}
+.wrap{max-width:760px;margin:0 auto;padding:18px 16px 40px}
+.screen{display:none}.screen.on{display:block}
+h1,h2,h3{margin:0;line-height:1.2}
+.muted{color:var(--ink2)}
+.btn{border:0;border-radius:12px;padding:13px 20px;font-weight:700;background:var(--ink);color:#fff;min-height:48px}
+.btn:disabled{opacity:.35;cursor:not-allowed}
+.btn.ghost{background:transparent;color:var(--ink);box-shadow:inset 0 0 0 2px var(--ink)}
+.btn.soft{background:#fff;color:var(--ink);box-shadow:inset 0 0 0 1.5px var(--line)}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+
+/* ---------- Title / register ---------- */
+.dayband{border-radius:22px;overflow:hidden;background:linear-gradient(90deg,#FFB38A 0 20%,#5BB8F0 20% 40%,#F2C14E 40% 60%,#E86A6A 60% 80%,#2E2A6B 80%);height:12px;margin-bottom:22px}
+.brand{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap}
+.brand h1{font-size:clamp(30px,7vw,46px);font-weight:800;letter-spacing:-.02em}
+.brand .code{font-weight:700;color:var(--ink2);font-size:18px;margin-top:4px}
+.tag{display:inline-block;background:var(--ink);color:#fff;border-radius:999px;padding:4px 12px;font-size:14px;font-weight:700}
+.tag.line{background:#fff;color:var(--ink);box-shadow:inset 0 0 0 1.5px var(--ink)}
+.panel{background:var(--card);border-radius:18px;padding:20px;margin-top:18px;box-shadow:0 1px 0 var(--line)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+label.f{display:block;font-size:14px;font-weight:700;color:var(--ink2)}
+label.f input,label.f select{display:block;width:100%;margin-top:5px;font:inherit;padding:11px 12px;border-radius:10px;border:1.5px solid var(--line);background:#fff;color:var(--ink)}
+.err{color:var(--bad);font-weight:700;min-height:1.4em;margin:8px 0 0}
+.foot{margin-top:26px;display:flex;justify-content:space-between;align-items:center;color:var(--ink2);font-size:14px;gap:10px;flex-wrap:wrap}
+.foot a{color:var(--ink2)}
+
+/* ---------- Hub (a day timeline) ---------- */
+.who{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-top:14px}
+.who b{font-size:18px}
+.total{font-size:15px;color:var(--ink2)}
+.total strong{font-size:26px;color:var(--ink)}
+.timeline{margin-top:18px;position:relative}
+.stop{display:grid;grid-template-columns:118px 1fr;background:#fff;border-radius:18px;overflow:hidden;margin-bottom:12px;box-shadow:0 1px 0 var(--line)}
+.stop .clock{background:var(--s1);color:var(--s3);padding:16px 12px;display:flex;flex-direction:column;justify-content:center;align-items:center}
+.stop .clock .t{font-size:32px;font-weight:800;font-variant-numeric:tabular-nums;letter-spacing:-.02em;line-height:1}
+.stop .clock .n{font-size:13px;font-weight:700;margin-top:6px;opacity:.85}
+.stop .body{padding:14px 16px;display:flex;flex-direction:column;gap:6px}
+.stop h3{font-size:21px}
+.stop .th{color:var(--ink2);font-size:15px}
+.bar{height:8px;border-radius:99px;background:#EDF0F5;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--s1)}
+.stop .meta{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;font-size:14px;color:var(--ink2)}
+.stop .btn{padding:10px 18px;min-height:44px}
+
+/* ---------- Play ---------- */
+.sky{border-radius:20px;padding:16px 18px;background:linear-gradient(180deg,var(--s1),var(--s2));color:var(--s3);display:flex;justify-content:space-between;align-items:flex-end;gap:12px}
+.sky .t{font-size:44px;font-weight:800;line-height:1;font-variant-numeric:tabular-nums;letter-spacing:-.03em}
+.sky .nm{font-weight:800;font-size:18px}
+.sky .rt{text-align:right;font-weight:700;font-size:15px}
+.sky .rt b{font-size:24px}
+.prog{display:flex;gap:4px;margin:12px 2px 0}
+.prog span{flex:1;height:6px;border-radius:9px;background:#D9DEEA}
+.prog span.ok{background:var(--ok)}.prog span.bad{background:var(--bad)}.prog span.cur{background:var(--ink)}
+.qcard{background:#fff;border-radius:20px;padding:20px;margin-top:14px;box-shadow:0 1px 0 var(--line)}
+.qhead{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:10px}
+.lv{border-radius:999px;padding:3px 11px;font-size:13px;font-weight:800}
+.lv1{background:#DDF4E7;color:#146B47}.lv2{background:#FFF1CF;color:#7A5405}.lv3{background:#FDE0DD;color:#8E231C}
+.qtype{font-size:14px;font-weight:700;color:var(--ink2)}
+.qnum{margin-left:auto;font-size:14px;color:var(--ink2);font-weight:700}
+.instr{font-size:14px;color:var(--ink2);margin:0 0 12px}
+.q{font-size:20px;font-weight:700;margin:0 0 16px}
+.scene{font-size:14px;color:var(--ink2);margin-bottom:8px}
+.opts{display:grid;gap:10px}
+.opt{display:flex;align-items:center;gap:12px;text-align:left;border:1.5px solid var(--line);background:#fff;border-radius:14px;padding:12px 14px;min-height:54px;font-size:17px}
+.opt .k{flex:none;width:30px;height:30px;border-radius:9px;background:var(--paper);display:grid;place-items:center;font-weight:800;font-size:14px}
+.opt.ok{border-color:var(--ok);background:var(--okbg)}.opt.bad{border-color:var(--bad);background:var(--badbg)}
+.opt:disabled{cursor:default}
+/* chat */
+.chat{background:#F4F6FA;border-radius:16px;padding:14px;display:flex;flex-direction:column;gap:8px;margin-bottom:16px}
+.bub{max-width:82%;padding:10px 14px;border-radius:18px;font-size:17px}
+.bub.a{background:#fff;align-self:flex-start;border-bottom-left-radius:6px;box-shadow:0 1px 0 var(--line)}
+.bub.b{background:var(--s1);color:var(--s3);align-self:flex-end;border-bottom-right-radius:6px;font-weight:700}
+.bub.b.empty{background:transparent;box-shadow:inset 0 0 0 2px var(--s1);color:var(--ink2);font-weight:400;min-width:110px;text-align:center}
+.bub small{display:block;font-size:12px;font-weight:700;opacity:.7}
+/* chips / drag */
+.sent{font-size:20px;line-height:2.4;margin-bottom:14px}
+.blank{display:inline-flex;align-items:center;justify-content:center;min-width:110px;min-height:44px;vertical-align:middle;border-radius:12px;border:2px dashed #AEB6CC;margin:0 4px;padding:2px 4px;line-height:1.2}
+.blank.hot{border-color:var(--ink);background:#F4F6FA}
+.blank.ok{border:2px solid var(--ok);background:var(--okbg)}.blank.bad{border:2px solid var(--bad);background:var(--badbg)}
+.tray,.ansline{display:flex;flex-wrap:wrap;gap:8px;min-height:60px;padding:10px;border-radius:14px}
+.tray{background:#F4F6FA}
+.ansline{border:2px dashed #AEB6CC;margin-bottom:12px;align-content:flex-start}
+.ansline.ok{border:2px solid var(--ok);background:var(--okbg)}.ansline.bad{border:2px solid var(--bad);background:var(--badbg)}
+.ansline:empty::before{content:attr(data-ph);color:#98A0B8;font-size:15px;align-self:center;padding-left:4px}
+.ansline.lines,.tray.lines{flex-direction:column;flex-wrap:nowrap}
+.chip{touch-action:none;user-select:none;-webkit-user-select:none;border:0;border-radius:999px;background:#fff;box-shadow:0 0 0 1.5px #C4CBDD,0 2px 0 #C4CBDD;padding:9px 16px;font-size:17px;font-weight:700;min-height:44px}
+.chip.line{border-radius:12px;text-align:left;font-weight:600;width:100%}
+.chip.dragging{opacity:.3}
+.ghost{position:fixed;z-index:99;pointer-events:none;transform:translate(-50%,-60%) rotate(-2deg);box-shadow:0 10px 24px rgba(31,35,64,.25)}
+.blank .chip{box-shadow:none;background:transparent;padding:6px 10px}
+/* match */
+.match{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.match .col{display:flex;flex-direction:column;gap:10px}
+.mc{border:1.5px solid var(--line);background:#fff;border-radius:14px;padding:12px;min-height:58px;font-size:16px;text-align:left}
+.mc.sel{border-color:var(--ink);box-shadow:inset 0 0 0 1.5px var(--ink);background:#F4F6FA}
+.mc.ok{border-color:var(--ok);background:var(--okbg)}.mc.bad{border-color:var(--bad);background:var(--badbg)}
+.mc.fix{border-color:var(--warn);background:#FFF6DF}
+.mc:disabled{cursor:default}
+.mc .pn{font-size:12px;font-weight:800;color:var(--ink2);display:block}
+/* spot */
+.words{display:flex;flex-wrap:wrap;gap:8px;font-size:20px}
+.wbtn{border:1.5px solid var(--line);background:#fff;border-radius:10px;padding:8px 12px;font-size:19px;min-height:46px}
+.wbtn.ok{border-color:var(--ok);background:var(--okbg)}.wbtn.bad{border-color:var(--bad);background:var(--badbg)}
+.check{margin-top:14px}
+/* feedback */
+.fb{margin-top:16px;border-radius:14px;padding:14px 16px;display:none}
+.fb.on{display:block}
+.fb.ok{background:var(--okbg)}.fb.bad{background:var(--badbg)}
+.fb h4{margin:0 0 4px;font-size:18px}
+.fb .ans{font-weight:700;margin:4px 0}
+.fb p{margin:4px 0 0}
+.next{margin-top:14px;width:100%}
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:#fff;padding:12px 18px;border-radius:12px;font-weight:700;z-index:100;display:none;max-width:90vw;text-align:center}
+.toast.on{display:block}
+.pop{animation:pop .28s ease}
+@keyframes pop{0%{transform:scale(.96)}60%{transform:scale(1.02)}100%{transform:scale(1)}}
+@media (prefers-reduced-motion:reduce){.pop{animation:none}}
+
+/* ---------- Result ---------- */
+.big{font-size:74px;font-weight:800;line-height:1;font-variant-numeric:tabular-nums;letter-spacing:-.03em}
+.stars{font-size:34px;letter-spacing:4px;margin-top:6px}
+.lvrow{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:16px}
+.lvbox{border-radius:14px;padding:12px;text-align:center}
+.lvbox b{font-size:24px;display:block}
+.rev{margin-top:10px}
+.rev .it{border-top:1px solid var(--line);padding:12px 0}
+.rev .it .p{color:var(--ink2);font-size:15px}
+.rev .it .c{font-weight:700;color:var(--ok)}
+
+/* ---------- Admin ---------- */
+.admin .wrap{max-width:1180px}
+.tabs{display:flex;gap:8px;margin:16px 0 10px;flex-wrap:wrap}
+.tabs button{border:0;border-radius:10px;padding:9px 14px;background:#fff;font-weight:700;box-shadow:inset 0 0 0 1.5px var(--line)}
+.tabs button.on{background:var(--ink);color:#fff;box-shadow:none}
+.filters{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.filters input,.filters select{font:inherit;font-size:15px;padding:8px 10px;border-radius:10px;border:1.5px solid var(--line);background:#fff}
+.tblwrap{overflow-x:auto;background:#fff;border-radius:14px;margin-top:10px}
+table{border-collapse:collapse;width:100%;font-size:14px}
+th,td{padding:9px 10px;border-bottom:1px solid var(--line);text-align:left;white-space:nowrap}
+th{background:#F4F6FA;font-size:13px;position:sticky;top:0}
+td.num{text-align:right;font-variant-numeric:tabular-nums}
+.pill{display:inline-block;border-radius:999px;padding:2px 9px;font-size:12px;font-weight:800}
+.pill.play{background:#FFF1CF;color:#7A5405}.pill.done{background:#DDF4E7;color:#146B47}.pill.vio{background:#FDE0DD;color:#8E231C}
+.del{border:0;background:var(--badbg);color:var(--bad);border-radius:8px;padding:5px 10px;font-weight:700;font-size:13px}
+.note{background:#FFF6DF;border-radius:12px;padding:12px 14px;font-size:14px;margin-top:10px}
+.stat{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
+.stat div{background:#fff;border-radius:12px;padding:10px 14px;font-size:14px;color:var(--ink2)}
+.stat b{display:block;font-size:22px;color:var(--ink)}
+
+@media (max-width:560px){
+  .grid3{grid-template-columns:1fr 1fr}
+  .stop{grid-template-columns:92px 1fr}
+  .stop .clock .t{font-size:25px}
+  .sky .t{font-size:34px}
+  .q{font-size:18px}.sent{font-size:18px}
+  .match{gap:8px}.mc{font-size:15px;padding:10px}
+}
+</style>
+</head>
+<body>
+
+<!-- ============ REGISTER ============ -->
+<section id="scrReg" class="screen">
+  <div class="wrap">
+    <div class="dayband" aria-hidden="true"></div>
+    <div class="brand">
+      <div>
+        <h1>English for Daily Life</h1>
+        <div class="code">M.6/4</div>
+      </div>
+      <div class="row"><span class="tag">สำหรับ grade 10</span><span class="tag line">By T.OAT</span></div>
+    </div>
+    <p class="muted" style="margin-top:14px">ใช้ภาษาอังกฤษตลอดหนึ่งวัน ตั้งแต่ทักทายตอนเช้าจนถึงโทรศัพท์ตอนกลางคืน มี 5 ด่าน ด่านละ 20 ข้อ ความยากสลับ ง่าย กลาง ยาก เล่นซ้ำได้ไม่จำกัด ระบบเก็บคะแนนที่ดีที่สุดไว้ให้</p>
+    <div class="panel">
+      <h2 style="font-size:20px;margin-bottom:12px">ลงทะเบียนผู้เล่น</h2>
+      <div class="grid2">
+        <label class="f">ชื่อ<input id="rName" autocomplete="off" autocorrect="off" spellcheck="false"></label>
+        <label class="f">นามสกุล<input id="rSur" autocomplete="off" autocorrect="off" spellcheck="false"></label>
+      </div>
+      <div class="grid3" style="margin-top:12px">
+        <label class="f">ชั้น<select id="rGrade"><option value="ม.4">ม.4</option><option value="ม.5">ม.5</option><option value="ม.6">ม.6</option></select></label>
+        <label class="f">ห้อง<select id="rRoom"></select></label>
+        <label class="f">เลขที่<select id="rNo"></select></label>
+      </div>
+      <p class="err" id="rErr"></p>
+      <button class="btn" id="rGo" style="width:100%">เริ่มวันของฉัน</button>
+    </div>
+    <div class="foot"><span>English for Daily Life (M.6/4) สำหรับ grade 10 By T.OAT</span><a href="?admin=1">สำหรับครูโอ๊ต</a></div>
+  </div>
+</section>
+
+<!-- ============ HUB ============ -->
+<section id="scrHub" class="screen">
+  <div class="wrap">
+    <div class="dayband" aria-hidden="true"></div>
+    <div class="brand">
+      <div><h1 style="font-size:clamp(26px,6vw,36px)">English for Daily Life</h1><div class="code">M.6/4</div></div>
+      <div class="row"><span class="tag">สำหรับ grade 10</span><span class="tag line">By T.OAT</span></div>
+    </div>
+    <div class="who">
+      <div><b id="hWho"></b><div class="muted" id="hCls" style="font-size:15px"></div></div>
+      <div class="total">คะแนนสูงสุดรวม <strong id="hTotal">0</strong> / 100</div>
+    </div>
+    <div class="timeline" id="hList"></div>
+    <div class="row" style="margin-top:8px"><button class="btn soft" id="hSwitch">เปลี่ยนผู้เล่น</button><span class="muted" style="font-size:14px">ไม่ใช่ชื่อคุณ? กดเปลี่ยนผู้เล่นก่อนเริ่ม คะแนนจะได้ไม่ไปเข้าชื่อคนอื่น</span></div>
+    <div class="foot"><span>By T.OAT</span><a href="?admin=1">สำหรับครูโอ๊ต</a></div>
+  </div>
+</section>
+
+<!-- ============ PLAY ============ -->
+<section id="scrPlay" class="screen">
+  <div class="wrap">
+    <div class="sky" id="pSky">
+      <div><div class="t" id="pTime"></div><div class="nm" id="pName"></div></div>
+      <div class="rt">คะแนน<br><b id="pScore">0</b> / 20</div>
+    </div>
+    <div class="prog" id="pProg"></div>
+    <div class="qcard" id="pCard">
+      <div class="qhead"><span class="lv" id="pLv"></span><span class="qtype" id="pType"></span><span class="qnum" id="pNum"></span></div>
+      <p class="instr" id="pInstr"></p>
+      <div id="pArea"></div>
+      <div class="fb" id="pFb"></div>
+      <button class="btn next" id="pNext" style="display:none"></button>
+    </div>
+    <div class="row" style="margin-top:14px"><button class="btn soft" id="pQuit">ออกจากด่าน</button></div>
+  </div>
+</section>
+
+<!-- ============ RESULT ============ -->
+<section id="scrRes" class="screen">
+  <div class="wrap">
+    <div class="sky" id="sSky" style="display:block">
+      <div class="nm" id="sName"></div>
+      <div class="big" id="sBig"></div>
+      <div class="stars" id="sStars"></div>
+      <div id="sMsg" style="font-weight:700;margin-top:6px"></div>
+    </div>
+    <div class="lvrow" id="sLv"></div>
+    <div class="row" style="margin-top:16px">
+      <button class="btn" id="sAgain">เล่นด่านนี้อีกครั้ง</button>
+      <button class="btn ghost" id="sHub">กลับไปเลือกด่าน</button>
+    </div>
+    <div class="panel">
+      <h2 style="font-size:19px">ข้อที่ตอบผิด</h2>
+      <div class="rev" id="sRev"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ADMIN ============ -->
+<section id="scrAdmin" class="screen admin">
+  <div class="wrap">
+    <div class="dayband" aria-hidden="true"></div>
+    <div class="brand">
+      <div><h1 style="font-size:30px">แผงควบคุมครูโอ๊ต</h1><div class="code">English for Daily Life (M.6/4) สำหรับ grade 10</div></div>
+      <div class="row"><a class="btn soft" href="./" style="text-decoration:none;display:inline-flex;align-items:center">หน้าผู้เรียน</a></div>
+    </div>
+    <div id="aLogin" class="panel" style="max-width:420px">
+      <label class="f">รหัสผู้ดูแล<input id="aPin" type="password" inputmode="numeric" autocomplete="off"></label>
+      <p class="err" id="aErr"></p>
+      <button class="btn" id="aGo" style="width:100%">เข้าสู่ระบบ</button>
+    </div>
+    <div id="aDash" style="display:none">
+      <div id="aNote"></div>
+      <div class="stat" id="aStat"></div>
+      <div class="tabs">
+        <button data-tab="sum" class="on">สรุปคะแนนสูงสุดรายคน</button>
+        <button data-tab="all">ทุกครั้งที่เล่น (สด)</button>
+      </div>
+      <div class="filters">
+        <input id="fQ" placeholder="ค้นหาชื่อหรือเลขที่">
+        <select id="fG"><option value="">ทุกชั้น</option><option>ม.4</option><option>ม.5</option><option>ม.6</option></select>
+        <select id="fR"><option value="">ทุกห้อง</option></select>
+        <select id="fS"><option value="">ทุกด่าน</option></select>
+        <button class="btn soft" id="aCsv" style="min-height:40px;padding:8px 14px">ดาวน์โหลด CSV</button>
+        <button class="btn soft" id="aRef" style="min-height:40px;padding:8px 14px">รีเฟรช</button>
+        <span class="muted" id="aUpd" style="font-size:13px"></span>
+      </div>
+      <div class="tblwrap"><table id="aTbl"></table></div>
+    </div>
+  </div>
+</section>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* =========================================================
+   English for Daily Life (M.6/4) | สำหรับ grade 10 | By T.OAT
+   ตั้งค่า: วาง URL ของ Web App (จาก Code.gs) ใน GAS_URL
+   ถ้าเว้นว่าง เกมยังเล่นได้ปกติ แต่คะแนนจะเก็บในเครื่องเท่านั้น
+   ========================================================= */
+const GAS_URL = 'https://script.google.com/macros/s/AKfycbxF7j1EO7JbehSLrNRcxYpULIEcPh9GApPvAojr-oWTQSC3ruKyAKrLaJbLrdjZY2Zu/exec';
+const ADMIN_PIN_OFFLINE = '7846';   // ใช้เฉพาะตอนยังไม่ใส่ GAS_URL (ถ้ามี GAS จะตรวจที่ Code.gs)
+
+const STAGES = [
+  {id:1,time:'07:30',name:'Morning Hello',th:'ทักทาย แนะนำตัว และคุยเล่นทั่วไป',s1:'#FFB38A',s2:'#FFE6D3',s3:'#5A2410'},
+  {id:2,time:'12:00',name:'Lunch Break',th:'สั่งอาหาร ร้านอาหาร และคาเฟ่',s1:'#5BB8F0',s2:'#DCEFFC',s3:'#0B3654'},
+  {id:3,time:'15:30',name:'At the Mall',th:'ซื้อของ ต่อราคา เปลี่ยนและคืนสินค้า',s1:'#F2C14E',s2:'#FFF1CC',s3:'#4D3500'},
+  {id:4,time:'17:45',name:'On the Move',th:'ถามทาง บอกทาง และการเดินทาง',s1:'#E86A6A',s2:'#FBDADA',s3:'#4A0F0F'},
+  {id:5,time:'20:30',name:'Night Calls',th:'โทรศัพท์ นัดหมาย สุขภาพ และขอความช่วยเหลือ',s1:'#2E2A6B',s2:'#5D57A8',s3:'#FFFFFF'}
+];
+
+/* ---------------------------------------------------------
+   คลังข้อสอบ: ในข้อ mc/chat ตัวเลือกแรก (o[0]) คือคำตอบที่ถูก
+   ระบบจะสลับตำแหน่งให้เองทุกครั้งที่เล่น
+   lv: 1 = ง่าย, 2 = กลาง, 3 = ยาก (ด่านละ 7 / 7 / 6 ข้อ)
+   --------------------------------------------------------- */
+const BANK = {
+1:[
+ {t:'mc',lv:1,q:'Someone says, "Nice to meet you." What is the best reply?',o:['Nice to meet you too.','I\'m fine, thanks.','See you later.','You\'re welcome.'],ex:'เมื่อพบกันครั้งแรก ตอบกลับด้วย Nice to meet you too.'},
+ {t:'mc',lv:1,q:'It is 2 p.m. Which greeting is best to say to your teacher?',o:['Good afternoon.','Good night.','Good morning.','Goodbye.'],ex:'หลังเที่ยงถึงประมาณ 5 โมงเย็นใช้ Good afternoon ส่วน Good night ใช้ตอนลาจากกันก่อนนอน'},
+ {t:'chat',lv:1,c:[['A','Hi! How are you today?']],o:['I\'m good, thanks. And you?','I\'m 16 years old.','I\'m from Bangkok.','Yes, I am.'],ex:'How are you? ถามความเป็นอยู่ ตอบว่าสบายดีและถามกลับด้วย And you?'},
+ {t:'fill',lv:1,s:'Good ___! Did you sleep well?',ans:['morning'],bank:['night','bye','luck'],ex:'Did you sleep well? ถามกันตอนเช้า จึงใช้ Good morning'},
+ {t:'order',lv:1,w:['What','is','your','name'],end:'?',ex:'ประโยคคำถาม Wh- : Wh- + is + ประธาน'},
+ {t:'match',lv:1,q:'จับคู่ประโยคกับคำตอบที่เหมาะสม',p:[['Thank you.','You\'re welcome.'],['Sorry I\'m late.','That\'s OK.'],['How are you?','Fine, thanks.'],['See you tomorrow.','Bye! See you.']],ex:'เป็นคู่ประโยคพื้นฐานที่ใช้ในชีวิตประจำวัน'},
+ {t:'spot',lv:1,w:['She','don\'t','like','spicy','food.'],bad:1,fix:'She doesn\'t like spicy food.',ex:'ประธานเอกพจน์บุรุษที่ 3 (she) ใช้ doesn\'t ไม่ใช่ don\'t'},
+ {t:'mc',lv:2,q:'A new friend asks, "What do you do?" What does this question usually ask about?',o:['your job or what you study','your hobby right now','your feelings today','your home address'],ex:'What do you do? ถามอาชีพหรือสถานะ เช่น I\'m a student.'},
+ {t:'chat',lv:2,c:[['A','Hi, I\'m Mina. I\'m new here.']],o:['Hi Mina, I\'m Ploy. Welcome to our class!','Hi Mina, where did you go?','Mina? I\'m new too, goodbye.','Hello, I\'m fine, thank you.'],ex:'เพื่อนใหม่แนะนำตัว เราควรแนะนำตัวกลับและกล่าวต้อนรับ'},
+ {t:'fill',lv:2,s:'Let me ___ you to my friend, Ton.',ans:['introduce'],bank:['meet','know','show'],ex:'introduce A to B = แนะนำ A ให้รู้จักกับ B'},
+ {t:'order',lv:2,w:['How','long','have','you','lived','here'],end:'?',ex:'How long + have + ประธาน + V3 ใช้ถามระยะเวลาที่ทำมาจนถึงปัจจุบัน'},
+ {t:'dlg',lv:2,l:['A: Hi! Are you in Class 4/2?','B: Yes, I am. I\'m Beam.','A: Nice to meet you, Beam. I\'m Nat.','B: Nice to meet you too, Nat.'],ex:'ถามก่อน ตอบและบอกชื่อ แล้วจึงกล่าว Nice to meet you ต่อกัน'},
+ {t:'match',lv:2,q:'จับคู่สำนวนทักทายแบบไม่เป็นทางการกับคำตอบ',p:[['What\'s up?','Not much.'],['Long time no see!','Yes! It\'s been ages.'],['How\'s it going?','Pretty good.'],['Have a nice day!','You too!']],ex:'สำนวนที่เพื่อนใช้ทักกัน What\'s up? มักตอบ Not much.'},
+ {t:'spot',lv:2,w:['I','am','agree','with','you.'],bad:1,fix:'I agree with you.',ex:'agree เป็นกริยาอยู่แล้ว ไม่ต้องมี am'},
+ {t:'chat',lv:3,c:[['A','Sorry, I didn\'t catch your name.']],o:['It\'s Pim. P-I-M.','I didn\'t catch it either.','Yes, my name is catching.','That\'s fine, thank you.'],ex:'didn\'t catch your name = ฟังชื่อไม่ทัน ควรบอกชื่อซ้ำหรือสะกดให้'},
+ {t:'chat',lv:3,c:[['A','So, what do you usually do in your free time?']],o:['I usually play badminton with my friends.','I\'m free on Friday.','I did my homework yesterday.','Free time is very good.'],ex:'ถามกิจกรรมที่ทำเป็นประจำ ตอบด้วย Present Simple + usually'},
+ {t:'mc',lv:3,q:'Which sentence is the most polite way to end a conversation?',o:['Well, it was great talking to you, but I have to go now.','I\'m leaving. Bye.','Stop talking. I have to go.','You talk too much. Goodbye.'],ex:'จบบทสนทนาอย่างสุภาพ ขอบคุณที่ได้คุยกันก่อน แล้วบอกเหตุผลที่ต้องไป'},
+ {t:'fill',lv:3,s:'It was nice ___ you. Let\'s keep in ___!',ans:['meeting','touch'],bank:['meet','hand'],ex:'nice meeting you = ยินดีที่ได้พบ, keep in touch = ติดต่อกันไว้นะ'},
+ {t:'order',lv:3,w:['I\'m','looking','forward','to','seeing','you','again'],end:'.',ex:'look forward to + V-ing = ตั้งตารอ (to ในที่นี้เป็นบุพบท จึงตามด้วย V-ing)'},
+ {t:'dlg',lv:3,l:['A: Excuse me, is this seat taken?','B: No, it\'s free. Please sit down.','A: Thanks. Are you waiting for the bus too?','B: Yes. It\'s late again today.'],ex:'เริ่มจากขออนุญาตนั่ง ขอบคุณ แล้วจึงชวนคุยเรื่องทั่วไป (small talk)'}
+],
+2:[
+ {t:'mc',lv:1,q:'The waiter asks, "Are you ready to order?" What is the best reply?',o:['Yes, I\'d like the chicken rice, please.','Yes, I\'m ready to cook.','No, I\'m not hungry yesterday.','Yes, the bill is ready.'],ex:'I\'d like ... please. เป็นวิธีสั่งอาหารที่สุภาพ'},
+ {t:'mc',lv:1,q:'Which one is a dessert?',o:['mango sticky rice','fried rice','green curry','pork noodle soup'],ex:'dessert = ของหวาน ข้าวเหนียวมะม่วงเป็นของหวาน'},
+ {t:'chat',lv:1,c:[['A','Would you like something to drink?']],o:['An iced tea, please.','A table for two, please.','It\'s delicious.','No, I don\'t eat.'],ex:'ถามเรื่องเครื่องดื่ม ตอบชื่อเครื่องดื่ม + please'},
+ {t:'fill',lv:1,s:'Excuse me, can I have the ___, please? I want to pay.',ans:['bill'],bank:['menu','fork','chef'],ex:'bill = ใบเรียกเก็บเงินค่าอาหาร'},
+ {t:'order',lv:1,w:['Can','I','see','the','menu,','please'],end:'?',ex:'Can I + V1 ... please? ใช้ขอสิ่งของอย่างสุภาพ'},
+ {t:'match',lv:1,q:'จับคู่คำบอกรสชาติกับความหมาย',p:[['spicy','hot, with a lot of chili'],['sweet','tastes like sugar'],['sour','tastes like lemon'],['salty','tastes like sea water']],ex:'คำบอกรสชาติพื้นฐาน spicy เผ็ด, sweet หวาน, sour เปรี้ยว, salty เค็ม'},
+ {t:'spot',lv:1,w:['Can','I','has','a','coffee,','please?'],bad:2,fix:'Can I have a coffee, please?',ex:'หลัง Can ใช้กริยาช่อง 1 ไม่เติม s จึงเป็น have'},
+ {t:'mc',lv:2,q:'Your food is too salty. What is the most polite thing to say to the waiter?',o:['Excuse me, I think this dish is a bit too salty.','This food is terrible! Take it away!','You can\'t cook.','Salty. Bad.'],ex:'ใช้ Excuse me, I think ... a bit too ... เพื่อบอกปัญหาอย่างสุภาพ'},
+ {t:'chat',lv:2,scene:'At a steak house',c:[['A','How would you like your steak?']],o:['Medium, please.','With my fork, please.','Very much, thank you.','I\'d like it yesterday.'],ex:'How would you like ...? ถามระดับความสุก เช่น rare, medium, well-done'},
+ {t:'fill',lv:2,s:'I\'m ___ to seafood, so I can\'t eat shrimp.',ans:['allergic'],bank:['afraid','interested','full'],ex:'be allergic to = แพ้ (อาหาร/สิ่งของ)'},
+ {t:'order',lv:2,w:['I\'d','like','to','book','a','table','for','four'],end:'.',ex:'book a table for + จำนวนคน = จองโต๊ะ'},
+ {t:'dlg',lv:2,l:['A: Good evening. Do you have a reservation?','B: Yes, under the name Kanya.','A: Right this way, please.','B: Thank you. Could we sit by the window?'],ex:'พนักงานถามการจอง ลูกค้าบอกชื่อ พนักงานพาไปโต๊ะ ลูกค้าขอที่นั่ง'},
+ {t:'match',lv:2,q:'จับคู่คำถามของพนักงานกับคำตอบของลูกค้า',p:[['For here or to go?','To go, please.'],['Anything else?','No, that\'s all.'],['Is it spicy?','Just a little.'],['How much is it?','It\'s 60 baht.']],ex:'For here or to go? = ทานที่นี่หรือกลับบ้าน'},
+ {t:'spot',lv:2,w:['How','many','sugar','do','you','want?'],bad:1,fix:'How much sugar do you want?',ex:'sugar เป็นนามนับไม่ได้ ใช้ How much ไม่ใช่ How many'},
+ {t:'chat',lv:3,c:[['A','I\'m sorry, we\'ve run out of mango juice.']],o:['Oh, that\'s OK. I\'ll have orange juice instead.','Great! Run faster next time.','OK, I\'ll run out too.','Mango juice, please.'],ex:'run out of = หมด ควรสั่งอย่างอื่นแทนด้วย instead'},
+ {t:'chat',lv:3,c:[['A','Is everything all right with your meal?']],o:['Everything\'s great, thanks. Could we have some more rice?','Yes, all right is my meal.','No, I\'m right.','Everything is meal, thanks.'],ex:'พนักงานถามความพอใจ ตอบว่าดีมากและขอสิ่งที่ต้องการเพิ่มได้'},
+ {t:'mc',lv:3,q:'At the end of dinner your friend says, "It\'s on me." What does it mean?',o:['I\'ll pay for everyone.','The food fell on me.','I\'m very full.','Let\'s split the bill.'],ex:'It\'s on me = ฉันเลี้ยงเอง'},
+ {t:'fill',lv:3,s:'Shall we ___ the bill? You pay for yours and I pay for ___.',ans:['split','mine'],bank:['cut','me'],ex:'split the bill = หารค่าอาหาร, mine = ของฉัน (possessive pronoun)'},
+ {t:'order',lv:3,w:['Could','you','make','it','less','spicy,','please'],end:'?',ex:'Could you make it + adjective ขอให้ปรับอาหาร เช่น less spicy = เผ็ดน้อยลง'},
+ {t:'dlg',lv:3,l:['A: Excuse me, this isn\'t what I ordered.','B: Oh, I\'m so sorry. What did you order?','A: I ordered the green curry, not the red one.','B: I\'ll change it for you right away.'],ex:'แจ้งปัญหา พนักงานขอโทษและถาม ลูกค้าอธิบาย พนักงานแก้ไข'}
+],
+3:[
+ {t:'mc',lv:1,q:'A customer asks, "How much is this T-shirt?" What does the shop assistant say?',o:['It\'s 250 baht.','It\'s size M.','It\'s blue.','It\'s cotton.'],ex:'How much ...? ถามราคา ตอบด้วยจำนวนเงิน'},
+ {t:'mc',lv:1,q:'Which sign tells you the prices are lower than usual?',o:['SALE','EXIT','CLOSED','PUSH'],ex:'SALE = ลดราคา'},
+ {t:'chat',lv:1,c:[['A','Hello. Can I help you?']],o:['Yes, I\'m looking for a pair of sneakers.','Yes, you can help yourself.','No, I can\'t help you.','I\'m help, thank you.'],ex:'I\'m looking for ... = กำลังหา... ใช้บอกพนักงานว่าต้องการอะไร'},
+ {t:'fill',lv:1,s:'I like this jacket. Can I ___ it on?',ans:['try'],bank:['look','pay','buy'],ex:'try on = ลองสวม'},
+ {t:'order',lv:1,w:['Do','you','have','this','in','black'],end:'?',ex:'Do you have this in + สี/ไซซ์? ถามว่ามีแบบอื่นไหม'},
+ {t:'match',lv:1,q:'จับคู่คำศัพท์กับความหมาย',p:[['cash','paper money and coins'],['receipt','paper that shows what you paid'],['discount','money taken off the price'],['size','how big or small something is']],ex:'คำศัพท์พื้นฐานในการซื้อของ'},
+ {t:'spot',lv:1,w:['These','shoes','is','too','small.'],bad:2,fix:'These shoes are too small.',ex:'shoes เป็นพหูพจน์ ใช้ are'},
+ {t:'mc',lv:2,q:'The jeans are too tight. What should you ask?',o:['Do you have these in a bigger size?','Do you have these in a smaller size?','Can I have tighter ones?','Are these jeans free?'],ex:'tight = คับ จึงต้องขอไซซ์ใหญ่ขึ้น (bigger size)'},
+ {t:'chat',lv:2,c:[['A','Would you like to pay by cash or card?']],o:['By card, please.','I\'d like a bag.','I\'ll pay tomorrow\'s cash.','Card is cash, please.'],ex:'ตอบวิธีจ่ายเงิน By cash / By card, please.'},
+ {t:'fill',lv:2,s:'This shirt is 300 baht and that one is 500 baht. This shirt is ___ than that one.',ans:['cheaper'],bank:['cheap','cheapest','expensive'],ex:'เปรียบเทียบ 2 สิ่งใช้ adjective + er + than'},
+ {t:'order',lv:2,w:['Can','I','get','a','refund','for','this'],end:'?',ex:'refund = เงินคืน, get a refund for ... = ขอเงินคืนสำหรับ...'},
+ {t:'dlg',lv:2,l:['A: Excuse me, how much are these headphones?','B: They\'re 890 baht, but they\'re 20% off today.','A: Great! I\'ll take them.','B: Would you like a bag?'],ex:'ถามราคา ได้ส่วนลด ตัดสินใจซื้อ (I\'ll take them) พนักงานถามต่อ'},
+ {t:'match',lv:2,q:'จับคู่ประโยคของลูกค้ากับคำตอบของพนักงาน',p:[['I\'m just looking.','OK, let me know if you need help.'],['Where\'s the fitting room?','It\'s over there, on the left.'],['Do you accept cards?','Yes, we do.'],['Can I have a bag?','Sure, here you are.']],ex:'I\'m just looking = แค่ดูเฉยๆ, fitting room = ห้องลองเสื้อ'},
+ {t:'spot',lv:2,w:['I','want','to','buy','two','pair','of','socks.'],bad:5,fix:'I want to buy two pairs of socks.',ex:'two ต้องตามด้วยนามพหูพจน์ pairs'},
+ {t:'chat',lv:3,c:[['A','I bought this fan yesterday, but it doesn\'t work.']],o:['I\'m sorry about that. Do you have the receipt?','It\'s working very hard.','Yesterday is not today.','Please buy another one.'],ex:'พนักงานควรขอโทษและขอดูใบเสร็จ (receipt) ก่อนเปลี่ยนหรือคืนเงิน'},
+ {t:'mc',lv:3,q:'Your friend says, "It\'s a bargain!" What does it mean?',o:['It\'s a very good price.','It\'s too expensive.','It\'s broken.','It\'s sold out.'],ex:'bargain = ของดีราคาถูก คุ้มมาก'},
+ {t:'mc',lv:3,q:'Which is the most polite way to ask for a lower price?',o:['Could you give me a small discount?','Make it cheaper now!','Your price is crazy.','I pay less, OK?'],ex:'Could you ...? สุภาพที่สุด และขอ a small discount อย่างนุ่มนวล'},
+ {t:'fill',lv:3,s:'Sorry, this item is out of ___. We\'ll get more next week.',ans:['stock'],bank:['store','order','sale'],ex:'out of stock = สินค้าหมด'},
+ {t:'order',lv:3,w:['I\'d like to','exchange','this dress','for','a smaller one'],end:'.',ex:'exchange A for B = เปลี่ยน A เป็น B'},
+ {t:'dlg',lv:3,l:['A: Hi, I\'d like to return these shoes.','B: Sure. What\'s wrong with them?','A: They\'re too small, and my size is sold out.','B: No problem. I can give you a refund.'],ex:'ขอคืนสินค้า ถามสาเหตุ อธิบาย แล้วคืนเงิน (refund)'}
+],
+4:[
+ {t:'mc',lv:1,q:'Which question asks for directions?',o:['Excuse me, how do I get to the station?','Excuse me, what time is it?','Excuse me, how old are you?','Excuse me, is this your bag?'],ex:'How do I get to ...? = ไป...ได้อย่างไร'},
+ {t:'mc',lv:1,q:'What does "get off" the bus mean?',o:['leave the bus','enter the bus','wait for the bus','drive the bus'],ex:'get on = ขึ้นรถ, get off = ลงจากรถ'},
+ {t:'chat',lv:1,c:[['A','Excuse me, where is the bank?']],o:['Go straight, and it\'s on your right.','It\'s at 9 o\'clock.','I have a bank account.','Yes, it\'s a bank.'],ex:'ถามสถานที่ ตอบด้วยการบอกทาง'},
+ {t:'fill',lv:1,s:'Turn ___ at the traffic lights.',ans:['left'],bank:['straight','across','along'],ex:'turn left / turn right = เลี้ยวซ้าย/ขวา ส่วน straight ใช้กับ go straight'},
+ {t:'order',lv:1,w:['Is','there','a','pharmacy','near','here'],end:'?',ex:'Is there a ... near here? = แถวนี้มี...ไหม'},
+ {t:'match',lv:1,q:'จับคู่คำบอกตำแหน่งกับความหมาย',p:[['opposite','on the other side of the street'],['next to','right beside'],['between','in the middle of two things'],['on the corner','where two streets meet']],ex:'บุพบทบอกตำแหน่งที่ใช้บอกทาง'},
+ {t:'spot',lv:1,w:['The','bus','stop','is','next','the','school.'],bad:4,fix:'The bus stop is next to the school.',ex:'ต้องใช้ next to (ติดกับ) ไม่ใช่ next ลำพัง'},
+ {t:'mc',lv:2,q:'You missed your stop on the BTS. What should you do?',o:['Get off at the next station and go back.','Jump off the train.','Stay on until the last station and cry.','Ask the driver to go back.'],ex:'miss your stop = เลยสถานี ให้ลงสถานีถัดไปแล้วนั่งย้อนกลับ'},
+ {t:'chat',lv:2,c:[['A','How long does it take to get to Siam?']],o:['About 20 minutes by BTS.','It\'s 20 kilometres long.','It takes a Siam.','I take the bus yesterday.'],ex:'How long does it take ...? ถามระยะเวลาเดินทาง'},
+ {t:'fill',lv:2,s:'Excuse me, does this bus ___ to Chatuchak?',ans:['go'],bank:['goes','going','went'],ex:'หลัง does ใช้กริยาช่อง 1 ไม่เติม s'},
+ {t:'order',lv:2,w:['Could','you','tell','me','the','way','to','the','hospital'],end:'?',ex:'Could you tell me the way to ...? ถามทางอย่างสุภาพ'},
+ {t:'dlg',lv:2,l:['A: Excuse me, could you help me? I\'m lost.','B: Sure. Where do you want to go?','A: The Grand Palace. Is it far from here?','B: Not really. It\'s about ten minutes on foot.'],ex:'ขอความช่วยเหลือ บอกจุดหมาย ถามระยะทาง แล้วได้คำตอบ'},
+ {t:'match',lv:2,q:'จับคู่คำเกี่ยวกับการเดินทาง',p:[['on foot','by walking'],['fare','money you pay for a trip'],['platform','where you wait for a train'],['traffic jam','too many cars on the road']],ex:'คำศัพท์เรื่องการเดินทางในเมือง'},
+ {t:'spot',lv:2,w:['I','go','to','school','by walk','every','day.'],bad:4,fix:'I go to school on foot every day.',ex:'เดินไปใช้ on foot (หรือ I walk to school) ไม่ใช้ by walk'},
+ {t:'chat',lv:3,scene:'At a train station',c:[['A','Excuse me, which platform does the train to Chiang Mai leave from?']],o:['Platform 5. You\'d better hurry. It leaves in ten minutes.','It leaves Chiang Mai at the platform.','The train is very long.','Chiang Mai is in the north.'],ex:'ถามชานชาลา ตอบหมายเลขชานชาลา พร้อมเตือนให้รีบ'},
+ {t:'mc',lv:3,q:'Someone gives you directions and says, "You can\'t miss it." What does it mean?',o:['It\'s very easy to find.','You must not go there.','It\'s too far to walk.','You will be late.'],ex:'You can\'t miss it = หาไม่ยากเลย เห็นแน่นอน'},
+ {t:'mc',lv:3,q:'Which is the most polite way to ask a stranger for help?',o:['Sorry to bother you, but could you tell me where the nearest MRT station is?','Hey! MRT where?','Tell me where the MRT is now.','You know MRT?'],ex:'Sorry to bother you, but could you ...? สุภาพมากกับคนแปลกหน้า'},
+ {t:'fill',lv:3,s:'Go ___ the bridge, and the museum is ___ the post office.',ans:['across','opposite'],bank:['between','during'],ex:'go across = ข้าม, opposite = ตรงข้าม'},
+ {t:'order',lv:3,w:['If you get lost,','you can','ask','someone','for','directions'],end:'.',ex:'ask someone for something = ขอ...จากใคร'},
+ {t:'dlg',lv:3,l:['A: Can you take me to Suvarnabhumi Airport, please?','B: Sure. Do you want to take the expressway?','A: Yes, please. I\'m in a hurry.','B: OK. There\'s a 50-baht toll. Is that all right?'],ex:'บอกจุดหมาย คนขับเสนอทางด่วน ตกลง แล้วแจ้งค่าผ่านทาง (toll)'}
+],
+5:[
+ {t:'mc',lv:1,q:'You have a pain in your head. What do you say?',o:['I have a headache.','I have a head.','I do a headache.','My head is have.'],ex:'have + อาการ เช่น have a headache = ปวดหัว'},
+ {t:'mc',lv:1,q:'Your friend says, "I\'m going to see a doctor." What is the best reply?',o:['I hope you feel better soon.','Congratulations!','Have a delicious time.','You\'re welcome.'],ex:'I hope you feel better soon = หายไวๆ นะ'},
+ {t:'chat',lv:1,c:[['A','You don\'t look well. What\'s the matter?']],o:['I have a sore throat.','It\'s a matter.','Nothing is matter, thanks.','I\'m matter.'],ex:'What\'s the matter? = เป็นอะไรไป ตอบด้วยอาการ'},
+ {t:'fill',lv:1,s:'Can you do me a ___? Please carry this box for me.',ans:['favour'],bank:['help','thing','work'],ex:'do someone a favour = ช่วยอะไรสักอย่าง'},
+ {t:'order',lv:1,w:['Let\'s','go','to','the','movies','tonight'],end:'.',ex:'Let\'s + V1 ใช้ชวนทำกิจกรรม'},
+ {t:'match',lv:1,q:'จับคู่อาการกับความหมาย',p:[['headache','pain in your head'],['fever','a high body temperature'],['cough','air comes out of your throat loudly'],['toothache','pain in your tooth']],ex:'คำศัพท์บอกอาการป่วยพื้นฐาน'},
+ {t:'spot',lv:1,w:['He','have','a','fever','today.'],bad:1,fix:'He has a fever today.',ex:'ประธาน He ใช้ has'},
+ {t:'mc',lv:2,q:'On the phone: "Hello, may I speak to Somchai, please?" You ARE Somchai. What do you say?',o:['Speaking.','I\'m speaking English.','Hello, goodbye.','Yes, you may speak.'],ex:'Speaking. = พูดอยู่ครับ/ค่ะ (ใช้เมื่อเราคือคนที่เขาขอสาย)'},
+ {t:'chat',lv:2,c:[['A','Do you want to go to the concert on Saturday?']],o:['I\'d love to! What time does it start?','I\'m going there yesterday.','Yes, I want concert.','Saturday is a day.'],ex:'I\'d love to! ตอบรับคำชวนอย่างเต็มใจ'},
+ {t:'fill',lv:2,s:'I\'m sorry, he\'s not here right now. Can I take a ___?',ans:['message'],bank:['call','picture','rest'],ex:'take a message = รับฝากข้อความ'},
+ {t:'order',lv:2,w:['Could','you','speak','more','slowly,','please'],end:'?',ex:'ขอให้พูดช้าลงอย่างสุภาพ'},
+ {t:'dlg',lv:2,l:['A: Hello, this is Nok. Is Dao there?','B: Sorry, she\'s out. Can I take a message?','A: Yes, please ask her to call me back.','B: Sure. I\'ll tell her when she gets home.'],ex:'แนะนำตัว ขอสาย รับฝากข้อความ ฝากให้โทรกลับ'},
+ {t:'match',lv:2,q:'จับคู่ Phrasal verb เรื่องโทรศัพท์กับความหมาย',p:[['hold on','wait a moment'],['hang up','end the phone call'],['call back','phone again later'],['pick up','answer the phone']],ex:'phrasal verb ที่ใช้บ่อยตอนคุยโทรศัพท์'},
+ {t:'spot',lv:2,w:['You','should','to','see','a','doctor.'],bad:2,fix:'You should see a doctor.',ex:'หลัง should ใช้กริยาช่อง 1 ทันที ไม่มี to'},
+ {t:'chat',lv:3,c:[['A','I\'m sorry, I can\'t make it to your party on Friday.']],o:['That\'s a shame. Maybe next time?','Great! See you there!','Make it yourself.','OK, I\'ll make a party.'],ex:'can\'t make it = ไปไม่ได้ ตอบด้วยความเสียดาย That\'s a shame.'},
+ {t:'mc',lv:3,q:'Which is the best way to politely say no to an invitation?',o:['Thanks for asking, but I already have plans that day.','No. I don\'t want to.','Your party will be boring.','Maybe, maybe not, whatever.'],ex:'ปฏิเสธอย่างสุภาพ ขอบคุณก่อนแล้วให้เหตุผล'},
+ {t:'mc',lv:3,q:'Your classmate says, "I\'m a bit under the weather today." What does it mean?',o:['I feel a little sick.','I\'m standing in the rain.','I love this weather.','I\'m very happy.'],ex:'under the weather = รู้สึกไม่ค่อยสบาย'},
+ {t:'fill',lv:3,s:'You\'d better ___ some rest and ___ plenty of water.',ans:['get','drink'],bank:['make','do'],ex:'get some rest = พักผ่อน, drink plenty of water = ดื่มน้ำมากๆ'},
+ {t:'order',lv:3,w:['Would you mind','if','I','opened','the window'],end:'?',ex:'Would you mind if I + V2 ...? ขออนุญาตอย่างสุภาพมาก'},
+ {t:'dlg',lv:3,l:['A: Emergency services. What\'s your emergency?','B: There\'s been an accident on Rama 4 Road.','A: Is anyone hurt?','B: Yes, a man fell off his motorbike. Please send an ambulance.'],ex:'เจ้าหน้าที่ถามเหตุ แจ้งเหตุและสถานที่ ถามผู้บาดเจ็บ แล้วขอรถพยาบาล'}
+]};
+
+const TYPE = {
+  mc:{n:'เลือกคำตอบ',i:'แตะตัวเลือกที่ถูกต้องที่สุด'},
+  chat:{n:'ตอบแชท',i:'เลือกข้อความที่ B ควรตอบกลับ'},
+  fill:{n:'ลากคำเติมช่องว่าง',i:'ลากคำไปวางในช่องว่าง หรือแตะคำเพื่อเติมทีละช่อง แตะคำในช่องเพื่อนำออก'},
+  order:{n:'เรียงประโยค',i:'ลากหรือแตะคำตามลำดับให้เป็นประโยคที่ถูกต้อง แตะคำที่วางแล้วเพื่อนำออก'},
+  dlg:{n:'เรียงบทสนทนา',i:'ลากหรือแตะประโยคตามลำดับบทสนทนาจากบนลงล่าง'},
+  match:{n:'จับคู่',i:'แตะฝั่งซ้ายก่อน แล้วแตะคู่ของมันทางขวา (มีโอกาสคู่ละ 1 ครั้ง)'},
+  spot:{n:'หาจุดผิด',i:'แตะคำที่ผิดในประโยค (มีโอกาส 1 ครั้ง)'}
+};
+const LVN = {1:'ง่าย',2:'กลาง',3:'ยาก'};
+
+/* ---------------- utils ---------------- */
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function shuffle(a){ a = a.slice(); for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
+function scrambleIdx(n, sameAs){ // index permutation that differs from correct order (by text)
+  const base=[...Array(n).keys()]; let p=base; for(let k=0;k<30;k++){ p=shuffle(base); if(!sameAs(p)) break; } return p; }
+function toast(msg, ms=2200){ const t=$('#toast'); t.textContent=msg; t.classList.add('on'); clearTimeout(toast._t); toast._t=setTimeout(()=>t.classList.remove('on'),ms); }
+function show(id){ document.querySelectorAll('.screen').forEach(s=>s.classList.toggle('on', s.id===id)); window.scrollTo(0,0); }
+function setSky(el, st){ el.style.setProperty('--s1',st.s1); el.style.setProperty('--s2',st.s2); el.style.setProperty('--s3',st.s3); }
+function nowTH(ms){ return new Date((ms||Date.now())+7*3600e3).toISOString().replace('T',' ').slice(0,19); } // yyyy-MM-dd HH:mm:ss (เวลาไทย) เรียงลำดับได้ถูกต้อง
+
+/* ---------------- storage ---------------- */
+const LSK = 'edl_m64_v1';
+function load(){ try{ return JSON.parse(localStorage.getItem(LSK)) || {}; }catch(e){ return {}; } }
+function save(){ try{ localStorage.setItem(LSK, JSON.stringify(L)); }catch(e){} }
+let L = load(); L.best = L.best || {}; L.plays = L.plays || {}; L.log = L.log || [];
+if(!L.device){ L.device = 'd'+Math.random().toString(36).slice(2,10); save(); }
+function pkey(p){ return [p.grade,p.room,p.no,p.name,p.sur].join('|'); }
+function prof(){ return L.profile; }
+function myBest(){ const k=pkey(prof()); return (L.best[k] = L.best[k] || {}); }
+function myPlays(){ const k=pkey(prof()); return (L.plays[k] = L.plays[k] || {}); }
+
+/* ---------------- backend ---------------- */
+function api(action, data={}){
+  if(!GAS_URL) return Promise.resolve({ok:false, offline:true});
+  return fetch(GAS_URL,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(Object.assign({action},data))})
+    .then(r=>r.json()).catch(e=>({ok:false,error:String(e)}));
+}
+
+/* ---------------- sound ---------------- */
+let AC=null;
+function beep(ok){ try{ AC = AC || new (window.AudioContext||window.webkitAudioContext)(); const notes = ok?[660,880]:[300,220];
+  notes.forEach((f,i)=>{ const o=AC.createOscillator(), g=AC.createGain(); o.type=ok?'triangle':'square'; o.frequency.value=f;
+    g.gain.setValueAtTime(.0001,AC.currentTime+i*.11); g.gain.exponentialRampToValueAtTime(.12,AC.currentTime+i*.11+.02); g.gain.exponentialRampToValueAtTime(.0001,AC.currentTime+i*.11+.16);
+    o.connect(g); g.connect(AC.destination); o.start(AC.currentTime+i*.11); o.stop(AC.currentTime+i*.11+.18); }); }catch(e){} }
+
+/* ================= REGISTER ================= */
+(function initReg(){
+  $('#rRoom').innerHTML = [1,2,3,4].map(n=>`<option value="${n}">${n}</option>`).join('');
+  $('#rNo').innerHTML = Array.from({length:50},(_,i)=>`<option value="${i+1}">${i+1}</option>`).join('');
+  $('#rGo').onclick = () => {
+    const p = {name:$('#rName').value.trim(), sur:$('#rSur').value.trim(), grade:$('#rGrade').value, room:$('#rRoom').value, no:$('#rNo').value};
+    if(p.name.length<1 || p.sur.length<1){ $('#rErr').textContent='กรุณากรอกชื่อและนามสกุล'; return; }
+    $('#rErr').textContent=''; L.profile=p; save(); renderHub(); show('scrHub');
+  };
+})();
+
+/* ================= HUB ================= */
+function renderHub(){
+  const p = prof(), best = myBest(), plays = myPlays();
+  $('#hWho').textContent = p.name+' '+p.sur;
+  $('#hCls').textContent = p.grade+'/'+p.room+' เลขที่ '+p.no;
+  let tot = 0;
+  $('#hList').innerHTML = STAGES.map(st=>{
+    const b = best[st.id]; const pl = plays[st.id]||0; if(b!=null) tot+=b;
+    return `<div class="stop" style="--s1:${st.s1};--s2:${st.s2};--s3:${st.s3}">
+      <div class="clock"><div class="t">${st.time}</div><div class="n">ด่าน ${st.id}</div></div>
+      <div class="body"><h3>${st.name}</h3><div class="th">${st.th}</div>
+        <div class="bar"><i style="width:${(b||0)*5}%"></i></div>
+        <div class="meta"><span>${b==null?'ยังไม่เคยเล่น':'คะแนนสูงสุด <b style="color:var(--ink)">'+b+'/20</b> เล่นแล้ว '+pl+' ครั้ง'}</span>
+        <button class="btn" data-st="${st.id}">${b==null?'เริ่มด่าน':'เล่นอีกครั้ง'}</button></div></div></div>`;
+  }).join('');
+  $('#hTotal').textContent = tot;
+  $('#hList').querySelectorAll('[data-st]').forEach(b=>b.onclick=()=>startStage(+b.dataset.st));
+}
+$('#hSwitch').onclick = () => { const p=prof()||{}; $('#rName').value=''; $('#rSur').value=''; $('#rGrade').value=p.grade||'ม.4'; show('scrReg'); };
+
+/* ================= GAME ================= */
+let G = null;
+function buildSeq(stId){
+  const pools = {1:[],2:[],3:[]};
+  shuffle(BANK[stId]).forEach(it=>pools[it.lv].push(it));
+  const seq=[]; while(pools[1].length||pools[2].length||pools[3].length){ [1,2,3].forEach(l=>{ if(pools[l].length) seq.push(pools[l].shift()); }); }
+  return seq;
+}
+let lastStart=0;
+function startStage(stId){
+  if(Date.now()-lastStart<1200) return; lastStart=Date.now();   // กันแตะปุ่มรัว ทำให้เกิดการเล่นซ้อน 2 รอบ
+  const st = STAGES.find(s=>s.id===stId);
+  G = {st, seq:buildSeq(stId), i:0, score:0, res:[], id:Date.now().toString(36)+Math.random().toString(36).slice(2,7), t0:Date.now(), vio:0, active:true, lock:false};
+  const pl = myPlays(); pl[stId]=(pl[stId]||0)+1; save();
+  setSky($('#pSky'), st); setSky($('#pCard'), st);
+  $('#pTime').textContent = st.time; $('#pName').textContent = 'ด่าน '+st.id+' '+st.name;
+  const p = prof();
+  const row = {attemptId:G.id,name:p.name,surname:p.sur,grade:p.grade,room:p.room,no:p.no,stage:st.id,stageName:st.name,status:'playing',score:0,answered:0,total:20,violations:0,durationSec:0,device:L.device};
+  G.row = row; logLocal(row);
+  api('start', row);
+  show('scrPlay'); renderQ();
+}
+function ident(extra){ const r=G.row; return Object.assign({attemptId:G.id,name:r.name,surname:r.surname,grade:r.grade,room:r.room,no:r.no,stage:r.stage,stageName:r.stageName,total:20,device:r.device},extra); }
+function logLocal(row){ row.updatedAt=nowTH(); if(!row.startedAt) row.startedAt=row.updatedAt;
+  const i = L.log.findIndex(r=>r.attemptId===row.attemptId); if(i>=0) L.log[i]=Object.assign({},row); else L.log.push(Object.assign({},row));
+  if(L.log.length>400) L.log = L.log.slice(-400); save(); }
+function progBar(){ $('#pProg').innerHTML = G.seq.map((_,k)=>`<span class="${k<G.res.length?(G.res[k].ok?'ok':'bad'):(k===G.i?'cur':'')}"></span>`).join(''); }
+
+function renderQ(){
+  const it = G.seq[G.i]; G.lock=false; G.cur=it;
+  $('#pScore').textContent = G.score;
+  $('#pLv').className = 'lv lv'+it.lv; $('#pLv').textContent = LVN[it.lv];
+  $('#pType').textContent = TYPE[it.t].n; $('#pNum').textContent = 'ข้อ '+(G.i+1)+' / 20';
+  $('#pInstr').textContent = TYPE[it.t].i;
+  $('#pFb').className='fb'; $('#pFb').innerHTML=''; $('#pNext').style.display='none';
+  const area = $('#pArea'); area.innerHTML=''; area.classList.remove('pop'); void area.offsetWidth; area.classList.add('pop');
+  R[it.t](it, area, done);
+  progBar();
+}
+function answerText(it){
+  switch(it.t){
+    case 'mc': case 'chat': return it.o[0];
+    case 'fill': { let k=0; return it.s.replace(/___/g,()=>it.ans[k++]); }
+    case 'order': return it.w.join(' ')+it.end;
+    case 'dlg': return it.l.join('\n');
+    case 'match': return it.p.map(x=>x[0]+' = '+x[1]).join('\n');
+    case 'spot': return it.fix;
+  }
+}
+function promptText(it){
+  switch(it.t){
+    case 'mc': return it.q;
+    case 'chat': return 'A: '+it.c[it.c.length-1][1];
+    case 'fill': return it.s;
+    case 'order': return 'เรียงประโยค';
+    case 'dlg': return 'เรียงบทสนทนา';
+    case 'match': return it.q||'จับคู่';
+    case 'spot': return it.w.join(' ');
+  }
+}
+function done(ok, yourText){
+  if(G.lock) return; G.lock=true;
+  const it=G.cur; if(ok) G.score++;
+  G.res.push({ok, it, your:yourText||''});
+  beep(ok);
+  const fb=$('#pFb');
+  fb.className='fb on '+(ok?'ok':'bad');
+  fb.innerHTML = `<h4>${ok?'ถูกต้อง':'ยังไม่ถูก'}</h4>${ok?'':'<div class="ans">คำตอบที่ถูก: '+esc(answerText(it)).replace(/\n/g,'<br>')+'</div>'}<p>${esc(it.ex)}</p>`;
+  $('#pScore').textContent = G.score;
+  const last = G.i===G.seq.length-1;
+  $('#pNext').textContent = last?'ดูผลคะแนน':'ข้อต่อไป'; $('#pNext').style.display='block';
+  G.row.score=G.score; G.row.answered=G.res.length; G.row.durationSec=Math.round((Date.now()-G.t0)/1000); G.row.violations=G.vio;
+  logLocal(G.row);
+  api('progress',ident({score:G.score,answered:G.res.length,durationSec:G.row.durationSec}));
+  progBar();
+  setTimeout(()=>{ try{ fb.scrollIntoView({behavior:'smooth',block:'nearest'}); }catch(e){} },30);
+}
+$('#pNext').onclick = () => { if(G.i < G.seq.length-1){ G.i++; renderQ(); } else finishStage(); };
+$('#pQuit').onclick = () => { if(confirm('ออกจากด่านนี้? คะแนนรอบนี้จะไม่ถูกนับเป็นคะแนนสูงสุด')){ G.active=false; G.row.status='quit'; logLocal(G.row); api('finish',ident({status:'quit',score:G.score,answered:G.res.length,durationSec:Math.round((Date.now()-G.t0)/1000)})); renderHub(); show('scrHub'); } };
+
+function finishStage(){
+  if(!G.active) return; G.active=false; const st=G.st;
+  const best=myBest(); if(best[st.id]==null || G.score>best[st.id]) best[st.id]=G.score; save();
+  G.row.status='finished'; G.row.score=G.score; G.row.answered=20; G.row.durationSec=Math.round((Date.now()-G.t0)/1000); logLocal(G.row);
+  api('finish',ident({status:'finished',score:G.score,answered:20,durationSec:G.row.durationSec,violations:G.vio}));
+  setSky($('#sSky'), st);
+  $('#sName').textContent = st.time+'  ด่าน '+st.id+' '+st.name;
+  $('#sBig').textContent = G.score+'/20';
+  const stars = G.score>=18?3:G.score>=14?2:G.score>=10?1:0;
+  $('#sStars').textContent = '★'.repeat(stars)+'☆'.repeat(3-stars);
+  $('#sMsg').textContent = stars===3?'ยอดเยี่ยม ใช้ภาษาได้เป็นธรรมชาติมาก':stars===2?'ดีมาก อีกนิดเดียวได้ 3 ดาว':stars===1?'ผ่านแล้ว ลองอ่านข้อที่ผิดแล้วเล่นอีกครั้ง':'ลองทบทวนข้อที่ผิดด้านล่าง แล้วเล่นใหม่ได้เลย';
+  const lvStat={1:[0,0],2:[0,0],3:[0,0]}; G.res.forEach(r=>{ lvStat[r.it.lv][1]++; if(r.ok) lvStat[r.it.lv][0]++; });
+  $('#sLv').innerHTML = [1,2,3].map(l=>`<div class="lvbox lv${l}"><b>${lvStat[l][0]}/${lvStat[l][1]}</b>${LVN[l]}</div>`).join('');
+  const wrong = G.res.filter(r=>!r.ok);
+  $('#sRev').innerHTML = wrong.length? wrong.map(r=>`<div class="it"><div class="p">${esc(TYPE[r.it.t].n)}: ${esc(promptText(r.it))}</div><div class="c">${esc(answerText(r.it)).replace(/\n/g,'<br>')}</div><div class="muted" style="font-size:15px">${esc(r.it.ex)}</div></div>`).join('') : '<p class="muted">ไม่มีข้อผิดเลย เก่งมาก</p>';
+  show('scrRes');
+}
+$('#sAgain').onclick = () => startStage(G.st.id);
+$('#sHub').onclick = () => { renderHub(); show('scrHub'); };
+
+/* ---------------- drag helper (pointer events, works on iPad) ---------------- */
+function draggable(el, onTap, onDrop){
+  el.addEventListener('keydown', e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); if(!G.lock) onTap(); } });
+  el.addEventListener('pointerdown', e=>{
+    if(G.lock) return; if(e.button!=null && e.button>0) return; e.preventDefault();
+    const sx=e.clientX, sy=e.clientY; let ghost=null;
+    const move = ev => {
+      if(!ghost && Math.hypot((ev.clientX||0)-(sx||0),(ev.clientY||0)-(sy||0))>8){
+        ghost=el.cloneNode(true); ghost.classList.add('ghost'); ghost.style.width=el.offsetWidth+'px'; document.body.appendChild(ghost); el.classList.add('dragging'); }
+      if(ghost){ ghost.style.left=ev.clientX+'px'; ghost.style.top=ev.clientY+'px';
+        document.querySelectorAll('.hot').forEach(h=>h.classList.remove('hot'));
+        const t=document.elementFromPoint(ev.clientX,ev.clientY); const d=t&&t.closest('[data-drop]'); if(d) d.classList.add('hot'); }
+    };
+    const up = ev => {
+      window.removeEventListener('pointermove',move); window.removeEventListener('pointerup',up); window.removeEventListener('pointercancel',up);
+      document.querySelectorAll('.hot').forEach(h=>h.classList.remove('hot'));
+      if(ghost){ ghost.remove(); el.classList.remove('dragging'); const t=document.elementFromPoint(ev.clientX,ev.clientY); if(!G.lock) onDrop(t); }
+      else if(ev.type!=='pointercancel' && !G.lock) onTap();
+    };
+    window.addEventListener('pointermove',move); window.addEventListener('pointerup',up); window.addEventListener('pointercancel',up);
+  });
+}
+function chipBtn(text, cls){ const b=document.createElement('button'); b.type='button'; b.className='chip'+(cls?' '+cls:''); b.textContent=text; return b; }
+function checkBtn(){ const b=document.createElement('button'); b.type='button'; b.className='btn check'; b.textContent='ตรวจคำตอบ'; b.disabled=true; return b; }
+
+/* ---------------- renderers ---------------- */
+const R = {
+  mc(it, area, cb){
+    area.innerHTML = `<p class="q">${esc(it.q)}</p>`;
+    optionList(it, area, cb);
+  },
+  chat(it, area, cb){
+    area.innerHTML = (it.scene?`<div class="scene">${esc(it.scene)}</div>`:'') +
+      `<div class="chat">${it.c.map(m=>`<div class="bub ${m[0]==='A'?'a':'b'}"><small>${m[0]}</small>${esc(m[1])}</div>`).join('')}<div class="bub b empty" id="chatSlot"><small>B</small>. . .</div></div>`;
+    optionList(it, area, cb, txt=>{ const s=$('#chatSlot'); s.classList.remove('empty'); s.innerHTML='<small>B</small>'+esc(txt); });
+  },
+  fill(it, area, cb){
+    const words = shuffle(it.ans.concat(it.bank)); const slots = it.ans.map(()=>null); // slot -> word index
+    const parts = it.s.split('___');
+    const sent = document.createElement('div'); sent.className='sent';
+    const tray = document.createElement('div'); tray.className='tray'; tray.dataset.drop='tray';
+    const chk = checkBtn();
+    area.appendChild(sent); area.appendChild(tray); area.appendChild(chk);
+    const place = (wi, si) => { const cur=slots.indexOf(wi); if(cur>=0) slots[cur]=null; if(si==null){ si=slots.indexOf(null); if(si<0) return; } slots[si]=wi; draw(); };
+    const unplace = wi => { const cur=slots.indexOf(wi); if(cur>=0) slots[cur]=null; draw(); };
+    function draw(){
+      sent.innerHTML='';
+      parts.forEach((p,k)=>{ sent.appendChild(document.createTextNode(p));
+        if(k<parts.length-1){ const b=document.createElement('span'); b.className='blank'; b.dataset.drop='blank'; b.dataset.i=k;
+          if(slots[k]!=null){ const wi=slots[k]; const c=chipBtn(words[wi]); draggable(c,()=>unplace(wi),t=>dropTo(wi,t)); b.appendChild(c); }
+          sent.appendChild(b); } });
+      tray.innerHTML='';
+      words.forEach((w,wi)=>{ if(slots.includes(wi)) return; const c=chipBtn(w); draggable(c,()=>place(wi,null),t=>dropTo(wi,t)); tray.appendChild(c); });
+      chk.disabled = slots.includes(null);
+    }
+    function dropTo(wi, t){ const d=t&&t.closest&&t.closest('[data-drop]'); if(!d){ draw(); return; }
+      if(d.dataset.drop==='blank') place(wi, +d.dataset.i); else unplace(wi); }
+    chk.onclick = () => {
+      const ok = slots.every((wi,k)=>words[wi]===it.ans[k]);
+      sent.querySelectorAll('.blank').forEach((b,k)=>b.classList.add(words[slots[k]]===it.ans[k]?'ok':'bad'));
+      chk.disabled=true; tray.style.opacity=.5;
+      cb(ok, slots.map(wi=>words[wi]).join(', '));
+    };
+    draw();
+  },
+  order(it, area, cb){ seqTask(it.w, it.end, false, area, cb); },
+  dlg(it, area, cb){ seqTask(it.l, '', true, area, cb); },
+  match(it, area, cb){
+    if(it.q) area.insertAdjacentHTML('beforeend',`<p class="q" style="font-size:17px">${esc(it.q)}</p>`);
+    const L1 = shuffle(it.p.map((_,i)=>i)), R1 = shuffle(it.p.map((_,i)=>i));
+    const box=document.createElement('div'); box.className='match';
+    const cl=document.createElement('div'); cl.className='col'; const cr=document.createElement('div'); cr.className='col';
+    box.appendChild(cl); box.appendChild(cr); area.appendChild(box);
+    let sel=null, wrong=false, doneN=0; const lb={}, rb={}; const usedR=new Set();
+    L1.forEach(i=>{ const b=document.createElement('button'); b.type='button'; b.className='mc'; b.textContent=it.p[i][0]; b.dataset.li=i;
+      b.onclick=()=>{ if(G.lock||b.disabled) return; Object.values(lb).forEach(x=>x.classList.remove('sel')); sel=i; b.classList.add('sel'); };
+      lb[i]=b; cl.appendChild(b); });
+    R1.forEach(j=>{ const b=document.createElement('button'); b.type='button'; b.className='mc'; b.textContent=it.p[j][1]; b.dataset.ri=j;
+      b.onclick=()=>{
+        if(G.lock||b.disabled) return;
+        if(sel==null){ toast('แตะคำทางซ้ายก่อน'); return; }
+        const i=sel; sel=null; lb[i].classList.remove('sel');
+        const n=++doneN;
+        if(i===j){ lb[i].classList.add('ok'); b.classList.add('ok'); lb[i].disabled=true; b.disabled=true; usedR.add(j);
+          lb[i].insertAdjacentHTML('afterbegin',`<span class="pn">คู่ ${n}</span>`); b.insertAdjacentHTML('afterbegin',`<span class="pn">คู่ ${n}</span>`); }
+        else { wrong=true; b.classList.add('bad'); setTimeout(()=>{ if(!b.disabled) b.classList.remove('bad'); },700);
+          lb[i].classList.add('fix'); rb[i].classList.add('fix'); lb[i].disabled=true; rb[i].disabled=true; usedR.add(i);
+          lb[i].insertAdjacentHTML('afterbegin',`<span class="pn">คู่ ${n} (เฉลย)</span>`); rb[i].insertAdjacentHTML('afterbegin',`<span class="pn">คู่ ${n} (เฉลย)</span>`); }
+        if(doneN===it.p.length) cb(!wrong, wrong?'จับคู่ผิดบางคู่':'');
+      };
+      rb[j]=b; cr.appendChild(b); });
+  },
+  spot(it, area, cb){
+    area.insertAdjacentHTML('beforeend','<p class="q" style="font-size:17px">ประโยคนี้มีคำผิด 1 จุด คำไหนผิด</p>');
+    const box=document.createElement('div'); box.className='words'; area.appendChild(box);
+    const bs = it.w.map((w,i)=>{ const b=document.createElement('button'); b.type='button'; b.className='wbtn'; b.textContent=w;
+      b.onclick=()=>{ if(G.lock) return; bs.forEach(x=>x.disabled=true); const ok=i===it.bad; b.classList.add(ok?'ok':'bad'); if(!ok) bs[it.bad].classList.add('ok'); cb(ok, w); };
+      box.appendChild(b); return b; });
+  }
+};
+function optionList(it, area, cb, onPick){
+  const box=document.createElement('div'); box.className='opts'; area.appendChild(box);
+  const opts = shuffle(it.o.map((t,i)=>({t,ok:i===0})));
+  const bs = opts.map((o,k)=>{ const b=document.createElement('button'); b.type='button'; b.className='opt';
+    b.innerHTML=`<span class="k">${'ABCD'[k]}</span><span>${esc(o.t)}</span>`;
+    b.onclick=()=>{ if(G.lock) return; bs.forEach(x=>x.disabled=true); b.classList.add(o.ok?'ok':'bad'); if(!o.ok) bs[opts.findIndex(x=>x.ok)].classList.add('ok'); if(onPick) onPick(o.t); cb(o.ok, o.t); };
+    box.appendChild(b); return b; });
+}
+function seqTask(items, end, lines, area, cb){
+  const perm = scrambleIdx(items.length, p=>p.every((x,k)=>items[x]===items[k]));
+  const placed=[]; // indices into items (original)
+  const ans=document.createElement('div'); ans.className='ansline'+(lines?' lines':''); ans.dataset.drop='ans'; ans.dataset.ph=lines?'วางประโยคแรกของบทสนทนาที่นี่':'วางคำที่นี่';
+  const endEl=document.createElement('div'); endEl.className='muted'; endEl.style.cssText='font-size:14px;margin:-6px 0 10px';
+  if(end) endEl.textContent='ท้ายประโยคจะมีเครื่องหมาย '+end+' ให้อัตโนมัติ';
+  const tray=document.createElement('div'); tray.className='tray'+(lines?' lines':''); tray.dataset.drop='tray';
+  const chk=checkBtn();
+  area.appendChild(ans); area.appendChild(endEl); area.appendChild(tray); area.appendChild(chk);
+  function draw(){
+    ans.innerHTML=''; tray.innerHTML='';
+    placed.forEach(ix=>{ const c=chipBtn(items[ix], lines?'line':''); c.dataset.ix=ix; draggable(c,()=>{ placed.splice(placed.indexOf(ix),1); draw(); },t=>dropTo(ix,t)); ans.appendChild(c); });
+    perm.forEach(ix=>{ if(placed.includes(ix)) return; const c=chipBtn(items[ix], lines?'line':''); draggable(c,()=>{ placed.push(ix); draw(); },t=>dropTo(ix,t)); tray.appendChild(c); });
+    chk.disabled = placed.length!==items.length;
+  }
+  function dropTo(ix, t){
+    const d=t&&t.closest&&t.closest('[data-drop]'); const cur=placed.indexOf(ix);
+    if(!d){ draw(); return; }
+    const self=t.closest('.chip'); if(self && self.dataset.ix!=null && +self.dataset.ix===ix && cur>=0){ draw(); return; }
+    if(d.dataset.drop==='tray'){ if(cur>=0) placed.splice(cur,1); draw(); return; }
+    if(cur>=0) placed.splice(cur,1);
+    const onChip=t.closest('.chip'); const target=onChip&&onChip.dataset.ix!=null?+onChip.dataset.ix:null;
+    const pos = target!=null && target!==ix ? placed.indexOf(target) : -1;
+    if(pos>=0) placed.splice(pos,0,ix); else placed.push(ix);
+    draw();
+  }
+  chk.onclick=()=>{
+    const ok = placed.every((ix,k)=>items[ix]===items[k]);
+    ans.classList.add(ok?'ok':'bad'); chk.disabled=true; ans.querySelectorAll('.chip').forEach(c=>c.disabled=true);
+    cb(ok, placed.map(ix=>items[ix]).join(' ')+end);
+  };
+  draw();
+}
+
+window.addEventListener('pagehide', ()=>{
+  if(!G||!G.active) return; G.row.status='quit'; G.row.durationSec=Math.round((Date.now()-G.t0)/1000); logLocal(G.row);
+  if(GAS_URL && navigator.sendBeacon){ try{ navigator.sendBeacon(GAS_URL, new Blob([JSON.stringify(Object.assign({action:'finish'},ident({status:'quit',score:G.score,answered:G.res.length,durationSec:G.row.durationSec})))],{type:'text/plain;charset=utf-8'})); }catch(e){} }
+});
+window.addEventListener('pageshow', e=>{ if(e.persisted && G && G.active){ G.row.status='playing'; logLocal(G.row); api('finish',ident({status:'playing'})); } });
+
+/* ---------------- anti-cheat (บันทึกเท่านั้น ไม่บังคับออก) ---------------- */
+document.addEventListener('visibilitychange', ()=>{
+  if(document.hidden && G && G.active){ G.vio++; G.row.violations=G.vio; logLocal(G.row); api('violation',{attemptId:G.id,violations:G.vio}); G.pendingWarn=true; }
+  else if(!document.hidden && G && G.pendingWarn){ G.pendingWarn=false; toast('ระบบบันทึกว่ามีการออกจากหน้าเกม ('+G.vio+' ครั้ง)',3000); }
+});
+try{ new MutationObserver(ms=>{ if(G&&G.active&&G.trQ!==G.i&&ms.some(m=>m.type==='characterData')){ G.trQ=G.i; G.vio++; G.row.violations=G.vio; logLocal(G.row); api('violation',{attemptId:G.id,violations:G.vio,note:'translate'}); toast('ตรวจพบการแปลหน้าเว็บ ระบบบันทึกไว้แล้ว',3000); } })
+  .observe(document.getElementById('pCard'),{subtree:true,characterData:true}); }catch(e){}
+
+/* ================= ADMIN ================= */
+let A = {rows:[], tab:'sum', timer:null};
+function initAdmin(){
+  show('scrAdmin');
+  $('#fR').innerHTML = '<option value="">ทุกห้อง</option>'+[1,2,3,4].map(n=>`<option value="${n}">${n}</option>`).join('');
+  $('#fS').innerHTML = '<option value="">ทุกด่าน</option>'+STAGES.map(s=>`<option value="${s.id}">ด่าน ${s.id} ${s.name}</option>`).join('');
+  const go = async () => {
+    const pin=$('#aPin').value.trim(); if(!pin){ $('#aErr').textContent='กรุณาใส่รหัส'; return; }
+    $('#aGo').disabled=true; $('#aErr').textContent='';
+    let ok=false;
+    if(GAS_URL){ const r=await api('checkPin',{pin}); if(r&&r.error){ $('#aGo').disabled=false; $('#aErr').textContent='เชื่อมต่อ Google Sheets ไม่ได้ ตรวจ GAS_URL และการ Deploy ('+r.error+')'; return; } ok=!!(r&&r.ok); }
+    else ok = pin===ADMIN_PIN_OFFLINE;
+    $('#aGo').disabled=false;
+    if(!ok){ $('#aErr').textContent='รหัสไม่ถูกต้อง'; return; }
+    A.pin=pin; $('#aLogin').style.display='none'; $('#aDash').style.display='block';
+    $('#aNote').innerHTML = GAS_URL?'' : '<div class="note">ยังไม่ได้เชื่อมต่อ Google Sheets (GAS_URL ว่างอยู่) ตอนนี้แสดงเฉพาะข้อมูลที่เล่นบนเครื่องนี้ ดูวิธีตั้งค่าในไฟล์ Code.gs</div>';
+    refresh(); if(GAS_URL) A.timer=setInterval(refresh,3000);
+  };
+  $('#aGo').onclick=go; $('#aPin').onkeydown=e=>{ if(e.key==='Enter') go(); };
+  document.querySelectorAll('.tabs button').forEach(b=>b.onclick=()=>{ document.querySelectorAll('.tabs button').forEach(x=>x.classList.toggle('on',x===b)); A.tab=b.dataset.tab; drawAdmin(); });
+  ['#fQ','#fG','#fR','#fS'].forEach(s=>$(s).addEventListener('input',drawAdmin));
+  $('#aRef').onclick=refresh; $('#aCsv').onclick=csv;
+}
+async function refresh(){
+  if(A.busy) return; A.busy=true; try{ await refresh_(); } finally { A.busy=false; }
+}
+async function refresh_(){
+  if(GAS_URL){ const r=await api('list',{pin:A.pin}); if(r&&r.ok){ A.rows=r.rows||[]; } else { $('#aUpd').textContent='โหลดข้อมูลไม่สำเร็จ '+((r&&r.error)||''); return; } }
+  else { L=load(); L.log=L.log||[]; A.rows=L.log.slice(); }
+  $('#aUpd').textContent='อัปเดต '+new Date().toLocaleTimeString('th-TH');
+  drawAdmin();
+}
+function filtered(){
+  const q=$('#fQ').value.trim().toLowerCase(), g=$('#fG').value, r=$('#fR').value, s=$('#fS').value;
+  return A.rows.filter(x=>(!g||x.grade===g)&&(!r||String(x.room)===r)&&(!s||String(x.stage)===s)&&(!q||(x.name+' '+x.surname+' '+x.no).toLowerCase().includes(q)));
+}
+function summary(rows){
+  const m={};
+  rows.forEach(x=>{ const k=[x.grade,x.room,x.no,x.name,x.surname].join('|');
+    const o=m[k]=m[k]||{grade:x.grade,room:x.room,no:x.no,name:x.name,surname:x.surname,best:{},plays:0,vio:0,last:''};
+    o.plays++; o.vio+=+x.violations||0; if(String(x.updatedAt)>o.last) o.last=String(x.updatedAt);
+    if(x.status==='finished'){ const sc=+x.score||0; if(o.best[x.stage]==null||sc>o.best[x.stage]) o.best[x.stage]=sc; } });
+  return Object.values(m).map(o=>{ o.total=STAGES.reduce((a,s)=>a+(o.best[s.id]||0),0); return o; })
+    .sort((a,b)=>String(a.grade).localeCompare(String(b.grade))||(+a.room)-(+b.room)||(+a.no)-(+b.no));
+}
+function drawAdmin(){
+  const rows=filtered();
+  const playing=rows.filter(x=>x.status==='playing'&&String(x.updatedAt)>=nowTH(Date.now()-20*60e3)).length, fin=rows.filter(x=>x.status==='finished').length;
+  const sm=summary(rows);
+  $('#aStat').innerHTML=`<div><b>${sm.length}</b>นักเรียน</div><div><b>${rows.length}</b>ครั้งที่เล่น</div><div><b>${playing}</b>กำลังเล่น</div><div><b>${fin}</b>เล่นจบ</div>`;
+  const t=$('#aTbl');
+  if(A.tab==='sum'){
+    t.innerHTML=`<thead><tr><th>ชั้น</th><th>ห้อง</th><th>เลขที่</th><th>ชื่อ-นามสกุล</th>${STAGES.map(s=>`<th>ด่าน ${s.id}</th>`).join('')}<th>รวม /100</th><th>เล่น (ครั้ง)</th><th>ออกจากหน้า</th><th>ล่าสุด</th></tr></thead><tbody>`+
+      (sm.length?sm.map(o=>`<tr><td>${esc(o.grade)}</td><td>${esc(o.room)}</td><td class="num">${esc(o.no)}</td><td>${esc(o.name+' '+o.surname)}</td>${STAGES.map(s=>`<td class="num">${o.best[s.id]==null?'-':o.best[s.id]}</td>`).join('')}<td class="num"><b>${o.total}</b></td><td class="num">${o.plays}</td><td class="num">${o.vio?'<span class="pill vio">'+o.vio+'</span>':'0'}</td><td>${esc(o.last)}</td></tr>`).join('')
+        :'<tr><td colspan="14" class="muted">ยังไม่มีข้อมูล</td></tr>')+'</tbody>';
+  } else {
+    const rs=rows.slice().sort((a,b)=>String(b.updatedAt).localeCompare(String(a.updatedAt)));
+    t.innerHTML=`<thead><tr><th>อัปเดต</th><th>ชื่อ-นามสกุล</th><th>ชั้น/ห้อง</th><th>เลขที่</th><th>ด่าน</th><th>สถานะ</th><th>คะแนน</th><th>ทำแล้ว</th><th>เวลา</th><th>ออกจากหน้า</th><th></th></tr></thead><tbody>`+
+      (rs.length?rs.map(x=>`<tr><td>${esc(x.updatedAt)}</td><td>${esc(x.name+' '+x.surname)}</td><td>${esc(x.grade+'/'+x.room)}</td><td class="num">${esc(x.no)}</td><td>${esc(x.stage)}</td>
+      <td>${x.status==='finished'?'<span class="pill done">จบแล้ว</span>':x.status==='playing'?(String(x.updatedAt)<nowTH(Date.now()-20*60e3)?'<span class="pill">ค้าง (ไม่ขยับ 20 นาที)</span>':'<span class="pill play">กำลังเล่น</span>'):'<span class="pill">ออกกลางคัน</span>'}</td>
+      <td class="num"><b>${esc(x.score)}</b>/20</td><td class="num">${esc(x.answered)}/20</td><td class="num">${fmtDur(x.durationSec)}</td><td class="num">${+x.violations?'<span class="pill vio">'+esc(x.violations)+'</span>':'0'}</td>
+      <td><button class="del" data-del="${esc(x.attemptId)}">ลบ</button></td></tr>`).join(''):'<tr><td colspan="11" class="muted">ยังไม่มีข้อมูล</td></tr>')+'</tbody>';
+    t.querySelectorAll('[data-del]').forEach(b=>b.onclick=()=>delRow(b.dataset.del));
+  }
+}
+function fmtDur(s){ s=+s||0; return Math.floor(s/60)+':'+String(s%60).padStart(2,'0'); }
+async function delRow(id){
+  if(!confirm('ลบข้อมูลการเล่นครั้งนี้?')) return;
+  if(GAS_URL){ const r=await api('delete',{pin:A.pin,attemptId:id}); if(!r||!r.ok){ toast('ลบไม่สำเร็จ '+((r&&r.error)||'')); return; } }
+  else { L=load(); L.log=(L.log||[]).filter(x=>x.attemptId!==id); save(); }
+  toast('ลบแล้ว'); refresh();
+}
+function csv(){
+  let rows, head;
+  if(A.tab==='sum'){ head=['ชั้น','ห้อง','เลขที่','ชื่อ','นามสกุล',...STAGES.map(s=>'ด่าน '+s.id),'รวม','เล่น(ครั้ง)','ออกจากหน้า'];
+    rows=summary(filtered()).map(o=>[o.grade,o.room,o.no,o.name,o.surname,...STAGES.map(s=>o.best[s.id]==null?'':o.best[s.id]),o.total,o.plays,o.vio]); }
+  else { head=['อัปเดต','ชื่อ','นามสกุล','ชั้น','ห้อง','เลขที่','ด่าน','สถานะ','คะแนน','ทำแล้ว','วินาที','ออกจากหน้า'];
+    rows=filtered().map(x=>[x.updatedAt,x.name,x.surname,x.grade,x.room,x.no,x.stage,x.status,x.score,x.answered,x.durationSec,x.violations]); }
+  const q=v=>'"'+String(v==null?'':v).replace(/"/g,'""')+'"';
+  const text='\ufeff'+[head,...rows].map(r=>r.map(q).join(',')).join('\n');
+  const a=document.createElement('a'); a.href=URL.createObjectURL(new Blob([text],{type:'text/csv;charset=utf-8'}));
+  a.download='daily-life-'+(A.tab==='sum'?'summary':'all')+'.csv'; document.body.appendChild(a); a.click(); a.remove();
+}
+
+/* ================= BOOT ================= */
+if(new URLSearchParams(location.search).get('admin')==='1') initAdmin();
+else if(L.profile){ renderHub(); show('scrHub'); }
+else show('scrReg');
+window.__EDL = {BANK, STAGES, get G(){return G;}};
+</script>
+</body>
+</html>
